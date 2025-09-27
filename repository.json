@@ -1,0 +1,8 @@
+{
+  "name": "Add-on Repository by Jens",
+  "url": "https://github.com/<dein-github-user>/home-assistant-addons",
+  "maintainer": "jenswei",
+  "addons": [
+    "opodsync"
+  ]
+}
