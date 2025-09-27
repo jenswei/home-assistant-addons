@@ -7,7 +7,7 @@
   "boot": "auto",
   "url": "https://hub.docker.com/r/ganeshlab/opodsync",
   "image": "ganeshlab/opodsync",
-  "arch": ["amd64", "armv7", "arm64"],
+  "arch": ["amd64", "armv7", "arm64", "aarch64"],
   "ingress": false,
   "panel_icon": "mdi:sync",
   "panel_title": "OPODSync",
