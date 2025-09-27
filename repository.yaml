@@ -1,5 +1,3 @@
 name: Add-on Repository by Jens
 url: https://github.com/jenswei/home-assistant-addons
 maintainer: jenswei
-addons:
-  - opodsync
