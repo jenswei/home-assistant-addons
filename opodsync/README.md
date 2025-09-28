@@ -7,7 +7,7 @@
 - GPodder-compatible sync server
 - Docker-based deployment using `ganeshlab/opodsync`
 - Easy integration with Home Assistant
-- Supports multiple architectures: `amd64`, `armv7`, `arm64`, `aarch64`
+- Supports multiple architectures: `amd64`, `armv7`, `aarch64`
 - No ingress support required
 
 ## ⚙️ Installation
