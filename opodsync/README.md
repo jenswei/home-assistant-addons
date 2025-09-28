@@ -18,7 +18,7 @@
 https://github.com/jenswei/home-assistant-addons
 
 
-4. After adding the repository, the `OPODSync` add-on should appear in the list.
+4. After adding the repository, the `oPODSync` add-on should appear in the list.
 5. Click on it, then click **Install**.
 
 ## 🔧 Configuration
