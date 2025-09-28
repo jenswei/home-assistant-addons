@@ -7,5 +7,7 @@ RUN apt-get update && \
 WORKDIR /var/www/server
 RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | tar xz --strip-components=2 --wildcards '*/server/*'
 
+VOLUME /data
+
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "."]
 EXPOSE 8080
