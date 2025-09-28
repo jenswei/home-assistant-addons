@@ -1,6 +1,6 @@
-# OPODSync Add-on for Home Assistant
+# oPODSync Add-on for Home Assistant
 
-**OPODSync** is a GPodder-compatible sync server for podcasts, packaged as a Home Assistant add-on.
+**oPODSync** is a GPodder-compatible sync server for podcasts, packaged as a Home Assistant add-on.
 
 ## 📦 Features
 
@@ -24,8 +24,6 @@ https://github.com/jenswei/home-assistant-addons
 ## 🔧 Configuration
 
 This add-on does not require any configuration by default. It runs the OPODSync server using the provided Docker image.
-
-If needed, you can customize options by editing the `config.json` and adding schema definitions.
 
 ## 🛠️ Usage
 
