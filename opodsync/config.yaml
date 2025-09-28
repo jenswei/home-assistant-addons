@@ -4,7 +4,7 @@ slug: opodsync
 description: GPodder compatible sync server for podcasts
 startup: application
 boot: auto
-url: "https://github.com/kd2org/opodsync"
+url: "https://fossil.kd2.org/opodsync"
 
 arch:
   - amd64
@@ -20,9 +20,6 @@ ports_description:
 
 panel_icon: mdi:sync
 #panel_title: oPODSync
-#homeassistant: "2023.0.0"
 schema: {}
 options: {}
 init: false
-
-#image: ganeshlab/opodsync
