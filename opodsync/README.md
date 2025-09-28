@@ -5,7 +5,7 @@
 ## 📦 Features
 
 - GPodder-compatible sync server
-- Docker-based deployment using inofficial [`ganeshlab/opodsync`](https://hub.docker.com/r/ganeshlab/opodsync) which is referenced on the official dev website (https://fossil.kd2.org/opodsync)
+- Docker-based deployment using a custom image that builds directly from the official source archive at https://fossil.kd2.org/opodsync
 - Easy integration with Home Assistant
 - Supports multiple architectures: `amd64`, `armv7`, `aarch64`
 - No ingress support required
