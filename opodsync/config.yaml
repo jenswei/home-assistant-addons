@@ -9,7 +9,6 @@ image: ganeshlab/opodsync
 arch:
   - amd64
   - armv7
-  - arm64
   - aarch64
 ingress: false
 panel_icon: mdi:sync
