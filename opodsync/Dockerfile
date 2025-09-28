@@ -1,0 +1,1 @@
+FROM ganeshlab/opodsync:latest
