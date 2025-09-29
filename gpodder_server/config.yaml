@@ -1,0 +1,19 @@
+name: GPodder Server
+version: "0.9.1"
+slug: gpodder_server
+description: GPodder.net server for podcast synchronization.
+startup: application
+boot: auto
+arch:
+  - amd64
+  - aarch64
+host_network: true
+#privileged: true
+options:
+  username: username
+  password: password
+  email: user@example.com
+schema:
+  username: str
+  password: str
+  email: str
