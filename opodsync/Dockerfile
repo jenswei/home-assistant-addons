@@ -1,12 +1,18 @@
-FROM php:8.1-cli
+# Basisimage: Leichtgewichtiger PHP-Webserver mit curl und tar
+FROM php:8.2-cli-alpine
 
-RUN apt-get update && \
-    apt-get install -y sqlite3 libsqlite3-dev unzip curl && \
-    docker-php-ext-install pdo pdo_sqlite
+# Installiere benötigte Pakete
+RUN apk add --no-cache curl tar
 
-WORKDIR /var/www/server
-RUN mkdir -p /var/www/server/data && \
-    curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | tar xz --strip-components=2 --wildcards '*/server/*'
+# Lade opodsync herunter und entpacke nur den server-Ordner
+RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
+    tar xz --strip-components=2 --wildcards '*/server/*' -C /var/www/html
 
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "."]
+# Setze Arbeitsverzeichnis
+WORKDIR /var/www/html
+
+# Port für den Webserver freigeben
 EXPOSE 8080
+
+# Starte den PHP-Webserver
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "."]
