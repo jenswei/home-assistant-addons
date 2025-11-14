@@ -14,7 +14,7 @@ RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
 # Port für den Webserver freigeben
 EXPOSE 8080
 
-VOLUME ["/var/www/server/data"]
+VOLUME ["/data"]
 
 # Starte den PHP-Webserver
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/server", "/var/www/server/index.php"]
