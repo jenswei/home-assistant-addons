@@ -18,7 +18,9 @@ ports:
 ports_description:
   "8080/tcp": "Web UI"
 map:
-  - /var/www/server/data:rw
+  - /app/db:rw
+  - /app/data:rw
+  - /var/www/server/config.toml:/app/config.toml:rw
 
 schema: {}
 options: {}
