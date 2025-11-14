@@ -5,8 +5,7 @@ RUN apt-get update && \
     docker-php-ext-install pdo pdo_sqlite
 
 WORKDIR /var/www/server
-RUN mkdir -p /app/db && \
-    curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | tar xz --strip-components=2 --wildcards '*/server/*'
+RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | tar xz --strip-components=2 --wildcards '*/server/*'
 
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "."]
 EXPOSE 8080
