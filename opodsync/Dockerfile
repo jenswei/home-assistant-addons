@@ -5,7 +5,7 @@ FROM php:8.2-cli-alpine
 RUN apk add --no-cache curl tar
 
 # Setze Arbeitsverzeichnis
-WORKDIR /var/www/server
+WORKDIR /var/www/opodsync/
 
 # Lade opodsync herunter und entpacke nur den server-Ordner
 RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
@@ -14,7 +14,7 @@ RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
 # Port für den Webserver freigeben
 EXPOSE 8080
 
-VOLUME ["/var/www/server/data"]
+VOLUME ["/var/www/opodsync/server/data"]
 
 # Starte den PHP-Webserver
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/server", "/var/www/server/index.php"]
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/opodsync/server", "/var/www/opodsync/server/index.php"]
