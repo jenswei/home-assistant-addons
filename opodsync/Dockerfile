@@ -15,4 +15,4 @@ RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
 EXPOSE 8080
 
 # Starte den PHP-Webserver
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "."]
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html", "/var/www/html/index.php"]
