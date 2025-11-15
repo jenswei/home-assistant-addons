@@ -1,5 +1,5 @@
 name: oPODSync
-version: "0.9.6a"
+version: "0.9.6alpha"
 slug: opodsync
 description: GPodder compatible sync server for podcasts
 startup: application
