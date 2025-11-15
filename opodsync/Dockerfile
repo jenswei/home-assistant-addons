@@ -1,15 +1,14 @@
-# Basisimage: from ghcr.io/hassio-addons/base as mentioned in https://community.home-assistant.io/t/issue-with-addon-persistent-data-storage/819322/3
-ARG BUILD_FROM
-FROM $BUILD_FROM as builder
+# Basisimage: Leichtgewichtiger PHP-Webserver mit curl und tar
+FROM php:8.2-cli-alpine
 
 # Installiere benötigte Pakete
-RUN apk add --no-cache curl tar php
+RUN apk add --no-cache curl tar
 
 # Setze Arbeitsverzeichnis
-WORKDIR /var/www/server/
+WORKDIR /
 
 # Lade opodsync herunter und entpacke nur den server-Ordner
-RUN mkdir -p /var/www/server/data && \
+RUN mkdir -p /data && \
     curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
     tar xz --strip-components=2 --wildcards '*/server/*'
 
@@ -19,4 +18,4 @@ EXPOSE 8080
 VOLUME ["/data"]
 
 # Starte den PHP-Webserver
-CMD ["php", "-S", "0.0.0.0:8080", "-t", ".", "index.php"]
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "/", "/index.php"]
