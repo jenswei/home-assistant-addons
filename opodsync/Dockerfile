@@ -8,7 +8,8 @@ RUN apk add --no-cache curl tar
 WORKDIR /var/www/server/
 
 # Lade opodsync herunter und entpacke nur den server-Ordner
-RUN curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
+RUN mkdir -p /var/www/server/data && \
+    curl -L https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz | \
     tar xz --strip-components=2 --wildcards '*/server/*'
 
 # Port für den Webserver freigeben
