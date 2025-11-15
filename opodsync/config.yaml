@@ -21,9 +21,6 @@ map:
   - type: data
     read_only: False
     path: /var/www/server/data
-  - type: share
-    read_only: False
-    path: /
 
 schema: {}
 options: {}
