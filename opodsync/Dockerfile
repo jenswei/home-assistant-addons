@@ -19,4 +19,4 @@ EXPOSE 8080
 VOLUME ["/data"]
 
 # Starte den PHP-Webserver
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/server", "/var/www/server/index.php"]
+CMD ["php", "-S", "0.0.0.0:8080", "-t", ".", "index.php"]
