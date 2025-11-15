@@ -1,5 +1,5 @@
 # Basisimage: from ghcr.io/hassio-addons/base as mentioned in https://community.home-assistant.io/t/issue-with-addon-persistent-data-storage/819322/3
-RG BUILD_FROM
+ARG BUILD_FROM
 FROM $BUILD_FROM as builder
 
 # Installiere benötigte Pakete
