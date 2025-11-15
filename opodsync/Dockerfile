@@ -3,7 +3,7 @@ ARG BUILD_FROM
 FROM $BUILD_FROM as builder
 
 # Installiere benötigte Pakete
-RUN apk add --no-cache curl tar
+RUN apk add --no-cache curl tar php
 
 # Setze Arbeitsverzeichnis
 WORKDIR /var/www/server/
