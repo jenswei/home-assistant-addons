@@ -18,7 +18,7 @@ ports:
 ports_description:
   "8080/tcp": "Web UI"
 map:
-  - type: dats
+  - type: data
     read_only: False
     path: /var/www/server/data
   - type: share
