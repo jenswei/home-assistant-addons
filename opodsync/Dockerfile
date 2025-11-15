@@ -1,5 +1,6 @@
-# Basisimage: Leichtgewichtiger PHP-Webserver mit curl und tar
-FROM php:8.2-cli-alpine
+# Basisimage: from ghcr.io/hassio-addons/base as mentioned in https://community.home-assistant.io/t/issue-with-addon-persistent-data-storage/819322/3
+RG BUILD_FROM
+FROM $BUILD_FROM as builder
 
 # Installiere benötigte Pakete
 RUN apk add --no-cache curl tar
