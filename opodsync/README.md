@@ -2,6 +2,8 @@
 
 **oPODSync** is a GPodder-compatible sync server for podcasts, packaged as a Home Assistant add-on.
 
+**!!! Currently not working correctly! It doesnt keep it's settings after restart, seems to be something with the directories**
+
 ## 📦 Features
 
 - GPodder-compatible sync server
