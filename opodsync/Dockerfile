@@ -13,17 +13,19 @@ WORKDIR /var/www/html
 ARG OPODSYNC_URL="https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz"
 ARG OPODSYNC_SHA256=""
 
-# Opodsync holen (nur server/), danach data -> /data symlinken
+# Opodsync holen (robust), server/ finden, data -> /data symlinken
 RUN set -eux; \
     curl -fsSL "$OPODSYNC_URL" -o /tmp/opodsync.tar.gz; \
     if [ -n "$OPODSYNC_SHA256" ]; then \
       echo "$OPODSYNC_SHA256  /tmp/opodsync.tar.gz" | sha256sum -c -; \
     fi; \
     mkdir -p /tmp/opod; \
-    tar -xzf /tmp/opodsync.tar.gz --strip-components=2 --wildcards '*/server/*' -C /tmp/opod; \
-    cp -a /tmp/opod/* /var/www/html/; \
+    tar -xzf /tmp/opodsync.tar.gz -C /tmp/opod; \
+    SRVDIR="$(find /tmp/opod -type d -name server -print -quit)"; \
+    if [ -z "$SRVDIR" ]; then echo "ERROR: 'server' directory not found in tarball"; exit 1; fi; \
+    # Wichtig: '/.' kopiert auch .htaccess & andere Dotfiles
+    cp -a "$SRVDIR"/. /var/www/html/; \
     rm -rf /tmp/opod /tmp/opodsync.tar.gz; \
-    # sicherstellen, dass /data existiert und als data/ im Webroot gesehen wird
     mkdir -p /data; \
     rm -rf /var/www/html/data; \
     ln -s /data /var/www/html/data
