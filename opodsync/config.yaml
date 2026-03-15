@@ -1,5 +1,5 @@
 name: oPODSync
-version: "0.9.7alpha"
+version: "0.9.8alpha"
 slug: opodsync
 description: GPodder compatible sync server for podcasts
 startup: application
@@ -15,10 +15,8 @@ ports:
   "8080/tcp": 8080
 ports_description:
   "8080/tcp": "Web UI"
-
-# kein map nötig, da Persistenz über /data (Supervisor) erfolgt
-map: []
-
+map:
+  - addon_config:rw
 schema: {}
 options: {}
 init: false
