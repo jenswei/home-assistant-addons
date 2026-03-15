@@ -34,7 +34,7 @@ RUN set -eux; \
     ln -s /config/opodsync /var/www/html/data
 
 # Minimal PHP hardening (adjust as needed)
-# If opodsync requires remote URL streams, set allow_url_fopen=On.
+# If Opodsync requires remote URL streams, set allow_url_fopen=On.
 RUN { \
     echo "expose_php=Off"; \
     echo "display_errors=Off"; \
@@ -43,9 +43,9 @@ RUN { \
     echo "post_max_size=16M"; \
     echo "upload_max_filesize=16M"; \
     echo "file_uploads=On"; \
-    # If opodsync needs remote URL streams -> set this to On
+    # If Opodsync needs remote URL streams -> set this to On
     echo "allow_url_fopen=Off"; \
-    # IMPORTANT: allow both webroot and addon_config paths (and the symlinked variant)
+    # Allow both webroot and addon_config paths (and the symlinked variant)
     echo "open_basedir=/var/www/html:/var/www/html/data:/tmp:/config:/config/opodsync"; \
     echo "disable_functions=exec,passthru,shell_exec,system,proc_open,popen,expect_popen"; \
     echo "session.save_path=/config/opodsync/sessions"; \
@@ -69,6 +69,6 @@ RUN addgroup -S app && adduser -S -G app -h /var/www/html app && \
 # HTTP port (TLS termination handled by Cloudflare/your proxy)
 EXPOSE 8080
 
-# First-start ownership fix (Supervisor may remount /config for addon_config)
+# First-start directory/ownership fix (Supervisor may mount /config for addon_config)
 # Then drop privileges and run the built-in PHP server
-CMD ["sh","-c","chown -R app:app /config/opodsync /var/www/html 2>/dev/null || true; exec su-exec app php -S 0.0.0.0:8080 -t /var/www/html /var/www/html/index.php"]
+CMD ["sh","-c","mkdir -p /config/opodsync; chown -R app:app /config/opodsync /var/www/html 2>/dev/null || true; exec su-exec app php -S 0.0.0.0:8080 -t /var/www/html /var/www/html/index.php"]
