@@ -49,13 +49,14 @@ RUN { \
 
 # Create a persistent app config with explicit paths (adjust BASE_URL if desired)
 RUN mkdir -p /config/opodsync/sessions /config/opodsync/cache && \
-    printf "%s\n" "<?php
+    cat > /config/opodsync/config.local.php <<'PHP'
+<?php
 namespace OPodSync;
 const BASE_URL = 'http://127.0.0.1:8080';
 const DATA_ROOT = '/config/opodsync';
 const CACHE_ROOT = DATA_ROOT . '/cache';
 const DB_FILE = DATA_ROOT . '/data.sqlite';
-" > /config/opodsync/config.local.php
+PHP
 
 # Unprivileged user + initial ownership (image layer)
 RUN addgroup -S app && adduser -S -G app -h /var/www/html app && \
