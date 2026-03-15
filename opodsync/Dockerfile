@@ -59,20 +59,20 @@ RUN addgroup -S app && adduser -S -G app -h /var/www/html app && \
 EXPOSE 8080
 
 # First-start directory/ownership fix (Supervisor maps /config for addon_config)
-# If config.local.php is missing in the runtime-mounted folder, create it,
+# If config.local.php is missing in the runtime-mounted folder, create it with printf,
 # then drop privileges and run the built-in PHP server.
 CMD ["sh","-c","\
   set -e; \
   mkdir -p /config/opodsync/sessions /config/opodsync/cache; \
   if [ ! -f /config/opodsync/config.local.php ]; then \
-    cat > /config/opodsync/config.local.php <<'PHP'
-<?php
-namespace OPodSync;
-const BASE_URL = 'http://127.0.0.1:8080';
-const DATA_ROOT = '/config/opodsync';
-const CACHE_ROOT = DATA_ROOT . '/cache';
-const DB_FILE = DATA_ROOT . '/data.sqlite';
-PHP
+    printf '%s\n' \
+'<?php' \
+'namespace OPodSync;' \
+\"const BASE_URL = 'http://127.0.0.1:8080';\" \
+\"const DATA_ROOT = '/config/opodsync';\" \
+\"const CACHE_ROOT = DATA_ROOT . '/cache';\" \
+\"const DB_FILE = DATA_ROOT . '/data.sqlite';\" \
+    > /config/opodsync/config.local.php; \
   fi; \
   chown -R app:app /config/opodsync /var/www/html 2>/dev/null || true; \
   exec su-exec app php -S 0.0.0.0:8080 -t /var/www/html /var/www/html/index.php \
