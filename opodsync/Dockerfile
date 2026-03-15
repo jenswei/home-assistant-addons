@@ -51,8 +51,20 @@ RUN { \
     echo "session.save_path=/config/opodsync/sessions"; \
   } > /usr/local/etc/php/conf.d/50-hardening.ini
 
-# Create a persistent app config with explicit paths (adjust BASE_URL if desired)
-RUN mkdir -p /config/opodsync/sessions /config/opodsync/cache && \
+# Unprivileged user + initial ownership (image layer)
+RUN addgroup -S app && adduser -S -G app -h /var/www/html app && \
+    chown -R app:app /var/www/html /config/opodsync
+
+# HTTP port (TLS termination handled by Cloudflare/your proxy)
+EXPOSE 8080
+
+# First-start directory/ownership fix (Supervisor maps /config for addon_config)
+# If config.local.php is missing in the runtime-mounted folder, create it,
+# then drop privileges and run the built-in PHP server.
+CMD ["sh","-c","\
+  set -e; \
+  mkdir -p /config/opodsync/sessions /config/opodsync/cache; \
+  if [ ! -f /config/opodsync/config.local.php ]; then \
     cat > /config/opodsync/config.local.php <<'PHP'
 <?php
 namespace OPodSync;
@@ -61,14 +73,7 @@ const DATA_ROOT = '/config/opodsync';
 const CACHE_ROOT = DATA_ROOT . '/cache';
 const DB_FILE = DATA_ROOT . '/data.sqlite';
 PHP
-
-# Unprivileged user + initial ownership (image layer)
-RUN addgroup -S app && adduser -S -G app -h /var/www/html app && \
-    chown -R app:app /var/www/html /config/opodsync
-
-# HTTP port (TLS termination handled by Cloudflare/your proxy)
-EXPOSE 8080
-
-# First-start directory/ownership fix (Supervisor may mount /config for addon_config)
-# Then drop privileges and run the built-in PHP server
-CMD ["sh","-c","mkdir -p /config/opodsync; chown -R app:app /config/opodsync /var/www/html 2>/dev/null || true; exec su-exec app php -S 0.0.0.0:8080 -t /var/www/html /var/www/html/index.php"]
+  fi; \
+  chown -R app:app /config/opodsync /var/www/html 2>/dev/null || true; \
+  exec su-exec app php -S 0.0.0.0:8080 -t /var/www/html /var/www/html/index.php \
+"]
