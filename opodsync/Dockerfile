@@ -51,7 +51,7 @@ RUN { \
   } > /usr/local/etc/php/conf.d/50-hardening.ini
 
 # Tiny health endpoint (handy for local checks and general monitoring)
-RUN printf "%s\n" "<?php echo 'OK';" > /var/www/html/health.php
+#RUN printf "%s\n" "<?php echo 'OK';" > /var/www/html/health.php
 
 # Create unprivileged runtime user
 RUN addgroup -S app && adduser -S -G app -h /var/www/html app && \
@@ -63,8 +63,9 @@ EXPOSE 8080
 # First-start ownership fix:
 # - Home Assistant mounts /data at runtime, which can override build-time ownership.
 # - We chown once on first start (using a sentinel) and then drop privileges with su-exec.
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget -qO- http://127.0.0.1:8080/health 2>/dev/null | grep -q OK || exit 1
+
+#HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+#  CMD wget -qO- http://127.0.0.1:8080/health 2>/dev/null | grep -q OK || exit 1
 
 CMD ["sh","-c", "\
   if [ ! -f /data/.perm_ok ]; then \
