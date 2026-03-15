@@ -12,6 +12,9 @@ WORKDIR /var/www/html
 ARG OPODSYNC_URL="https://fossil.kd2.org/opodsync/tarball/opodsync.tar.gz"
 ARG OPODSYNC_SHA256=""
 
+# Make Opodsync resolve DATA_ROOT directly to the add-on public config path
+ENV DATA_ROOT=/config/opodsync
+
 # Fetch opodsync (robust), locate 'server' folder, copy (incl. dotfiles)
 RUN set -eux; \
     curl -fsSL "$OPODSYNC_URL" -o /tmp/opodsync.tar.gz; \
@@ -42,7 +45,8 @@ RUN { \
     echo "file_uploads=On"; \
     # If opodsync needs remote URL streams -> set this to On
     echo "allow_url_fopen=Off"; \
-    echo "open_basedir=/var/www/html:/tmp:/config/opodsync"; \
+    # IMPORTANT: allow both webroot and addon_config paths (and the symlinked variant)
+    echo "open_basedir=/var/www/html:/var/www/html/data:/tmp:/config:/config/opodsync"; \
     echo "disable_functions=exec,passthru,shell_exec,system,proc_open,popen,expect_popen"; \
     echo "session.save_path=/config/opodsync/sessions"; \
   } > /usr/local/etc/php/conf.d/50-hardening.ini
