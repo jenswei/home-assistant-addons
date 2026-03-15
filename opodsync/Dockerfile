@@ -4,7 +4,7 @@ FROM php:8.2-cli-alpine
 
 
 # Tools für Download/Entpacken + TLS-Validierung
-RUN apk add --no-cache curl tar ca-certificates tzdata && update-ca-certificates
+RUN apk add --no-cache curl tar ca-certificates tzdata su-exec && update-ca-certificates
 
 # Webroot
 WORKDIR /var/www/html
@@ -48,10 +48,9 @@ RUN { \
 # Unprivilegierter User + Rechte
 RUN addgroup -S app && adduser -S -G app -h /var/www/html app && \
     chown -R app:app /var/www/html /data
-USER app
 
 # HTTP-Port
 EXPOSE 8080
 
-# Start: PHP Built-in Server mit Webroot
-CMD ["php","-S","0.0.0.0:8080","-t","/var/www/html","/var/www/html/index.php"]
+# Chown bei Start + PHP als 'app' laufen lassen
+CMD ["sh","-c","chown -R app:app /data /var/www/html 2>/dev/null || true; exec su-exec app php -S 0.0.0.0:8080 -t /var/www/html /var/www/html/index.php"]
