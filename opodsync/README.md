@@ -2,15 +2,11 @@
 
 **oPODSync** is a GPodder-compatible sync server for podcasts, packaged as a Home Assistant add-on.
 
-**!!! Currently not working correctly! It doesnt keep it's settings after restart, seems to be something with the directories**
-
 ## 📦 Features
 
 - GPodder-compatible sync server
-- Docker-based deployment using a custom image that builds directly from the official source archive at https://fossil.kd2.org/opodsync
+- builds directly from the official source archive at https://fossil.kd2.org/opodsync
 - Easy integration with Home Assistant
-- Supports multiple architectures: `amd64`, `armv7`, `aarch64`
-- No ingress support required
 
 ## ⚙️ Installation
 
@@ -25,7 +21,8 @@ https://github.com/jenswei/home-assistant-addons
 
 ## 🔧 Configuration
 
-This add-on does not require any configuration by default. It runs the OPODSync server using the provided Docker image.
+This add-on does not require any configuration by default. It runs the OPODSync server on port 8080.
+The persistent config folder is exposed to home assistant. Also the opodsyc database is placed there.
 
 ## 🛠️ Usage
 
